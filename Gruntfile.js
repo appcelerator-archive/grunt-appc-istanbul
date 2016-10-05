@@ -1,6 +1,6 @@
 /*
  * grunt-appc-istanbul
- * https://github.com/wilson_san/grunt-appc-istanbul
+ * https://github.com/appcelerator/grunt-appc-istanbul
  *
  * Copyright (c) 2016 Wilson Luu
  * Licensed under the MIT license.
