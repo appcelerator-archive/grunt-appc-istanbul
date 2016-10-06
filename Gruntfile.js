@@ -34,11 +34,6 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-    // TODO: need to work on the nodeunit test
-    // grunt.registerTask('test', ['clean', 'appc_istanbul', 'nodeunit']);
-    grunt.registerTask('test', ['clean', 'appc_istanbul']);
-
-    grunt.registerTask('default', ['test']);
+    grunt.registerTask('default', ['clean', 'appc_istanbul']);
 };
