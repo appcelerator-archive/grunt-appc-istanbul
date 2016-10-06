@@ -36,7 +36,9 @@ In the above example, since the `options` property is not specified in the `samp
 
 By default, if the `options` property is not specified, then a HTML code coverage report will be generated. See [example](http://gotwarlost.github.io/istanbul/public/coverage/lcov-report/index.html).
 
-**Note:** The value for `dest` should be a directory.
+**Note:**
+* The value for `dest` should be a directory.
+* You do not need to create the `dest` directory beforehand. The `dest` directory will be created if one does not exist.
 
 ### Options
 
@@ -88,7 +90,7 @@ Also, it is recommended to clean your `dest` directory before generating the cod
 grunt.initConfig({
     // clean the coverage folder before generating code coverage
     clean: {
-        output: ['<%=appc_istanbul.samples.dest%>*']
+        output: ['coverage/*']
     },
 
     appc_istanbul: {

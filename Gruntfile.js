@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         // clean the coverage folder before generating code coverage
         clean: {
-            output: ['<%=appc_istanbul.samples.dest%>*']
+            output: ['coverage/*']
         },
 
         appc_istanbul: {

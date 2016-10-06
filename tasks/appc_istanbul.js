@@ -14,14 +14,17 @@ const
 
 module.exports = function (grunt) {
     grunt.registerMultiTask('appc_istanbul', 'Generate code coverage using istanbul', function () {
-        // TODO: spit out a warning if no srcs, dest or grunt file format is specified
-        // TODO: check if dest is only a directory
-
-        const
-            that = this,
-            done = that.async();
+        const that = this;
 
         that.files.forEach(function (file) {
+            if (!file.src) {
+                grunt.fail.fatal(`'src' property not specified for target ${that.target}.`, 1);
+            }
+
+            if (!file.dest) {
+                grunt.fail.fatal(`'dest' property not specified for target ${that.target}.`, 1);
+            }
+
             const
                 instrumenter = new istanbul.Instrumenter(),
                 collector = new istanbul.Collector();
@@ -45,10 +48,8 @@ module.exports = function (grunt) {
             const
                 reports = [],
                 options = that.options(),
-                // using default istanbul configuration; hence, the false parameter
+                // using default istanbul configuration; hence, the false argument
                 reporter = new istanbul.Reporter(false, file.dest);
-
-            let trackWrite = 0;
 
             if (options && options.htmlLcov) {
                 // per istanbul api: http://gotwarlost.github.io/istanbul/public/apidocs/classes/LcovReport.html
@@ -61,11 +62,9 @@ module.exports = function (grunt) {
                 reports.push('html');
             }
             reporter.addAll(reports);
-            // writing the reports asynchronously; hence, the false parameter
-            reporter.write(collector, false, function () {
-                if (++trackWrite === reports.length - 1) {
-                    done();
-                }
+            // writing the reports synchronously; hence, the true argument
+            reporter.write(collector, true, function () {
+                grunt.log.ok(`Finished writing code coverage report for target '${that.target}'.`);
             });
         });
     });
