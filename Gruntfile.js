@@ -8,32 +8,19 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        // Before generating any new files, remove any previously-created files.
-        clean: {
-            tests: ['tmp']
-        },
+        // clean the coverage folder before generating code coverage
+        clean: ['coverage'],
 
-        // Configuration to be run (and then tested).
+        // TODO: default should be the html report
         appc_istanbul: {
-            default_options: {
-                options: {},
-                files: {
-                    'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-                }
+            options: {
+                report: ['html', 'lcov']
             },
-            custom_options: {
-                options: {
-                    separator: ': ',
-                    punctuation: ' !!!'
-                },
-                files: {
-                    'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-                }
-            }
+            src: ['./example.js']
         },
 
         // Unit tests.
@@ -46,14 +33,12 @@ module.exports = function(grunt) {
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');
 
-    // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-    // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'appc_istanbul', 'nodeunit']);
+    // TODO: need to work on the nodeunit test
+    // grunt.registerTask('test', ['clean', 'appc_istanbul', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'appc_istanbul']);
 
-    // By default, lint and run all tests.
     grunt.registerTask('default', ['test']);
 };
