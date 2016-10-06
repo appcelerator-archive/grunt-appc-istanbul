@@ -13,14 +13,19 @@ module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         // clean the coverage folder before generating code coverage
-        clean: ['coverage'],
+        clean: {
+            output: ['<%=appc_istanbul.settings.dest%>*']
+        },
 
-        // TODO: default should be the html report
         appc_istanbul: {
-            options: {
-                report: ['html', 'lcov']
-            },
-            src: ['./example.js']
+            settings: {
+                options: {
+                    // htmlLcov: true,
+                    // lcovOnly: true
+                },
+                src: './samples/*.js',
+                dest: 'coverage/'
+            }
         }
     });
 

@@ -2,7 +2,7 @@
 
 const x = [1, -1];
 x.forEach(val => {
-    if(val > 0) {
+    if (val > 0) {
         console.log('yay');
     }
     else {
