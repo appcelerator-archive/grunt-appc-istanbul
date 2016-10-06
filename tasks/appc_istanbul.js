@@ -10,7 +10,7 @@
 
 const
     vm = require('vm'),
-    istanbul = require('istanbul');
+    istanbul = require('istanbul'); // http://gotwarlost.github.io/istanbul/public/apidocs/
 
 module.exports = function (grunt) {
     grunt.registerMultiTask('appc_istanbul', 'Generate code coverage using istanbul', function () {
@@ -45,6 +45,7 @@ module.exports = function (grunt) {
             const
                 reports = [],
                 options = that.options(),
+                // using default istanbul configuration; hence, the false parameter
                 reporter = new istanbul.Reporter(false, file.dest);
 
             let trackWrite = 0;
@@ -60,6 +61,7 @@ module.exports = function (grunt) {
                 reports.push('html');
             }
             reporter.addAll(reports);
+            // writing the reports asynchronously; hence, the false parameter
             reporter.write(collector, false, function () {
                 if (++trackWrite === reports.length - 1) {
                     done();

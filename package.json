@@ -21,9 +21,6 @@
     "engines": {
         "node": ">= 4.0.0"
     },
-    "scripts": {
-        "test": "grunt test"
-    },
     "dependencies": {
         "istanbul": "~0.4.5"
     },

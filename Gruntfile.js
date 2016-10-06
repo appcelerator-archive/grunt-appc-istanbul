@@ -14,15 +14,11 @@ module.exports = function (grunt) {
     grunt.initConfig({
         // clean the coverage folder before generating code coverage
         clean: {
-            output: ['<%=appc_istanbul.settings.dest%>*']
+            output: ['<%=appc_istanbul.samples.dest%>*']
         },
 
         appc_istanbul: {
-            settings: {
-                options: {
-                    // htmlLcov: true,
-                    // lcovOnly: true
-                },
+            samples: {
                 src: './samples/*.js',
                 dest: 'coverage/'
             }
