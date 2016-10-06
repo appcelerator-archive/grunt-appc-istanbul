@@ -26,10 +26,13 @@ module.exports = function (grunt) {
 
             collector.add(global.__coverage__);
 
-            htmlReport.writeReport(collector, false);    
+            htmlReport.writeReport(collector, false);
         */
 
+        // TODO: need to handle absolute paths and globbing
         console.log(this.filesSrc);
+
+        // TODO: html, lcov, or html AND lcov; default to html
         console.log(this.options().report);
     });
 };

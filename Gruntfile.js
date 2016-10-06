@@ -21,13 +21,7 @@ module.exports = function (grunt) {
                 report: ['html', 'lcov']
             },
             src: ['./example.js']
-        },
-
-        // Unit tests.
-        nodeunit: {
-            tests: ['test/*_test.js']
         }
-
     });
 
     // Actually load this plugin's task(s).
