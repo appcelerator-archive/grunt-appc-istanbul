@@ -16,6 +16,19 @@ const
 
 module.exports = function (grunt) {
     grunt.registerMultiTask('appc_istanbul', 'Generate code coverage using istanbul', function () {
+        /*
+            const ic = instrumenter.instrumentSync(
+                fs.readFileSync(path.join(process.cwd(), 'example.js'), {encoding: 'utf8'}),
+                path.join(process.cwd(), 'example.js')
+            );
+
+            vm.runInThisContext(ic);
+
+            collector.add(global.__coverage__);
+
+            htmlReport.writeReport(collector, false);    
+        */
+
         console.log(this.filesSrc);
         console.log(this.options().report);
     });
