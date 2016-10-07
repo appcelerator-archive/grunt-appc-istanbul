@@ -1,10 +1,4 @@
-/*
- * grunt-appc-istanbul
- * https://github.com/appcelerator/grunt-appc-istanbul
- *
- * Copyright (c) 2016 Wilson Luu
- * Licensed under the MIT license.
- */
+// TODO: incorporate grunt-appc-js
 
 'use strict';
 
