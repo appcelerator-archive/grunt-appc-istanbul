@@ -28,6 +28,7 @@ module.exports = function (grunt) {
                 if (src === file.entryPoint) {
                     iw.setEntryPoint(tmpSrc);
                 }
+                // all the instrumentation and coverage data gathering will be done in the tmp folder
                 grunt.file.copy(src, tmpSrc);
                 iw.instrument(tmpSrc, src);
             });
