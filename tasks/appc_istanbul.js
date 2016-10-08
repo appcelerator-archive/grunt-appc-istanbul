@@ -6,7 +6,10 @@ const IstanbulWrapper = require('../lib/istanbul_wrapper.js');
 
 module.exports = function (grunt) {
     grunt.registerMultiTask('appc_istanbul', 'Generate code coverage using istanbul', function () {
-        const that = this;
+        const
+            that = this,
+            done = that.async();
+
         that.files.forEach(function (file) {
             if (!file.entryPoint) {
                 grunt.fail.fatal(`'entryPoint' property not specified for target ${that.target}.`, 1);
@@ -18,14 +21,22 @@ module.exports = function (grunt) {
                 grunt.fail.fatal(`'dest' property not specified for target ${that.target}.`, 1);
             }
 
-            const iw = new IstanbulWrapper(file.entryPoint);
+            const iw = new IstanbulWrapper();
+            // instrument all the js files/code
             file.src.forEach(function (src) {
                 const tmpSrc = `${process.cwd()}/tmp/${src}`;
+                if (src === file.entryPoint) {
+                    iw.setEntryPoint(tmpSrc);
+                }
                 grunt.file.copy(src, tmpSrc);
                 iw.instrument(tmpSrc, src);
             });
-            // iw.makeReport(that.options(), file.dest);
-            // grunt.log.ok(`Finished writing code coverage report for target '${that.target}'.`);
+            iw.runEntryPoint(function () {
+                iw.addCoverage();
+                iw.makeReport(that.options(), file.dest);
+                grunt.log.ok(`Finished writing code coverage report for target '${that.target}'.`);
+                done();
+            });
         });
     });
 };
