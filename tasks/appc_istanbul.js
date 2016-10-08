@@ -11,8 +11,8 @@ module.exports = function (grunt) {
             done = that.async();
 
         that.files.forEach(function (file) {
-            if (!file.entryPoint) {
-                grunt.fail.fatal(`'entryPoint' property not specified for target ${that.target}.`, 1);
+            if (!file.main) {
+                grunt.fail.fatal(`'main' property not specified for target ${that.target}.`, 1);
             }
             if (!file.src) {
                 grunt.fail.fatal(`'src' property not specified for target ${that.target}.`, 1);
@@ -25,8 +25,8 @@ module.exports = function (grunt) {
             // instrument all the js files/code
             file.src.forEach(function (src) {
                 const tmpSrc = `${process.cwd()}/tmp/${src}`;
-                if (src === file.entryPoint) {
-                    iw.setEntryPoint(tmpSrc);
+                if (src === file.main) {
+                    iw.setMain(tmpSrc);
                 }
                 // all the instrumentation and coverage data gathering will be done in the tmp folder
                 grunt.file.copy(src, tmpSrc);

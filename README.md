@@ -26,6 +26,7 @@ In your project's Gruntfile, add a section named `appc_istanbul` to the data obj
 grunt.initConfig({
     appc_istanbul: {
         samples: {
+            main: './samples/test.js',
             src: './samples/*.js',
             dest: 'coverage/'
         }
@@ -37,7 +38,8 @@ In the above example, since the `options` property is not specified in the `samp
 By default, if the `options` property is not specified, then a HTML code coverage report will be generated. See [example](http://gotwarlost.github.io/istanbul/public/coverage/lcov-report/index.html).
 
 **Note:**
-* The value for `dest` should be a directory.
+* The `main` value should be a file path in `src`. And, should be the entry point file for your app/project.
+* The `dest` value should be a directory.
 * You do not need to create the `dest` directory beforehand. The `dest` directory will be created if one does not exist.
 
 ### Options

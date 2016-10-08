@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
         appc_istanbul: {
             samples: {
-                entryPoint: './samples/test.js',
+                main: './samples/test.js',
                 src: './samples/*.js',
                 dest: 'coverage/'
             }
