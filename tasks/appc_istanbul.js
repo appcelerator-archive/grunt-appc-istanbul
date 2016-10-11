@@ -14,9 +14,6 @@ module.exports = function (grunt) {
             if (!file.proj) {
                 grunt.fail.fatal(`'proj' property not specified for target ${that.target}.`, 1);
             }
-            if (!file.main) {
-                grunt.fail.fatal(`'main' property not specified for target ${that.target}.`, 1);
-            }
             if (!file.src) {
                 grunt.fail.fatal(`'src' property not specified for target ${that.target}.`, 1);
             }
@@ -32,15 +29,11 @@ module.exports = function (grunt) {
             const iw = new IstanbulWrapper();
             file.src.forEach(function (src) {
                 const tmpSrc = src.replace(file.proj, tmpDir);
-                if (src === file.main) {
-                    grunt.log.ok(`Setting ${tmpSrc} as entry point file for target '${that.target}'.`);
-                    iw.setMain(tmpSrc);
-                }
                 grunt.log.ok(`Instrumenting ${tmpSrc} for target '${that.target}'.`);
                 iw.instrument(tmpSrc, src);
             });
-            grunt.log.ok(`Running entry point file for target '${that.target}'.`);
-            iw.runEntryPoint(function () {
+            grunt.log.ok(`Running Arrow project for target '${that.target}'.`);
+            iw.runArrow(function () {
                 grunt.log.ok(`Gathering code coverage data for target '${that.target}'.`);
                 iw.addCoverage();
                 grunt.log.ok(`Creating report for target '${that.target}'.`);
