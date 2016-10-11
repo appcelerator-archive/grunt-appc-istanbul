@@ -26,8 +26,13 @@ In your project's Gruntfile, add a section named `appc_istanbul` to the data obj
 grunt.initConfig({
     appc_istanbul: {
         samples: {
-            main: './samples/test.js',
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            main: '<%= appc_istanbul.samples.proj %>/app.js',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
@@ -38,7 +43,9 @@ In the above example, since the `options` property is not specified in the `samp
 By default, if the `options` property is not specified, then a HTML code coverage report will be generated. See [example](http://gotwarlost.github.io/istanbul/public/coverage/lcov-report/index.html).
 
 **Note:**
+* The `proj` value should be the path to your project.
 * The `main` value should be a file path in `src`. And, should be the entry point file for your app/project.
+* The `src` values should be files that you want code coverage on.
 * The `dest` value should be a directory.
 * You do not need to create the `dest` directory beforehand. The `dest` directory will be created if one does not exist.
 
@@ -64,7 +71,13 @@ grunt.initConfig({
             options: {
                 htmlLcov: true
             },
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            main: '<%= appc_istanbul.samples.proj %>/app.js',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
@@ -79,7 +92,13 @@ grunt.initConfig({
             options: {
                 lcovOnly: true
             },
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            main: '<%= appc_istanbul.samples.proj %>/app.js',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
@@ -87,17 +106,23 @@ grunt.initConfig({
 ```
 In the above example, only the LCOV code coverage report will be generated into the `dest` directory.
 
-Also, it is recommended to clean your `dest` directory before generating the code coverage report. This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
+Also, it is recommended to clean your `dest` and the auto-generated `tmp` directory before generating the code coverage report. This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
 ```js
 grunt.initConfig({
     // clean the coverage folder before generating code coverage
     clean: {
-        output: ['coverage/*']
+        output: ['coverage/**', 'tmp/**']
     },
 
     appc_istanbul: {
         samples: {
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            main: '<%= appc_istanbul.samples.proj %>/app.js',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
