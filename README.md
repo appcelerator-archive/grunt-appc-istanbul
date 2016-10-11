@@ -37,7 +37,8 @@ grunt.initConfig({
     }
 });
 ```
-When you run this plugin, the plugin will do the following:
+When you run this plugin, it will do the following:
+
 1. Create a copy of your Arrow project into the `./tmp` folder.
 2. Instrument the specified JS files.
 3. Run `appc run` in `./tmp`.
