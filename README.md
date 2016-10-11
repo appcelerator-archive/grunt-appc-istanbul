@@ -1,9 +1,9 @@
 # grunt-appc-istanbul
 
-> A lightweight plugin to generate code coverage while leveraging istanbul.
+> A lightweight plugin to generate code coverage (leveraging istanbul) for Arrow projects.
 
 ## Getting Started
-This plugin requires Grunt `~1.0.0`
+This plugin requires Grunt `~1.0.0` and **assumes you already have Appc CLI installed on your machine**.
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -26,21 +26,42 @@ In your project's Gruntfile, add a section named `appc_istanbul` to the data obj
 grunt.initConfig({
     appc_istanbul: {
         samples: {
-            main: './samples/test.js',
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
 });
 ```
-In the above example, since the `options` property is not specified in the `samples` target, a HTML code coverage report will be generated into the `dest` directory.
+When you run this plugin, the plugin will do the following:
+1. Create a copy of your Arrow project into the `./tmp` folder.
+2. Instrument the specified JS files.
+3. Run `appc run` in `./tmp`.
+4. At this point, a copy of your Arrow project will be running and you can run your unit tests (e.g. mocha, grunt-mocha etc.) that will make CRUD calls to your Arrow project.
+5. Once your unit tests are done running, press `ctrl+c` to allow the plugin to create the report.
 
-By default, if the `options` property is not specified, then a HTML code coverage report will be generated. See [example](http://gotwarlost.github.io/istanbul/public/coverage/lcov-report/index.html).
+In the above example, since the `options` property is not specified in the `samples` target, a HTML code coverage report will be generated (by default) into the `dest` directory.
 
-**Note:**
-* The `main` value should be a file path in `src`. And, should be the entry point file for your app/project.
-* The `dest` value should be a directory.
-* You do not need to create the `dest` directory beforehand. The `dest` directory will be created if one does not exist.
+### Target Properties (required)
+
+#### proj
+Type: `String`
+
+The value should be the path to your Arrow project.
+
+#### src
+Type: `Array`
+
+The string values in the array should be JS files in your Arrow project that you want code coverage on.
+
+#### dest
+Type: `String`
+
+The value should be a directory and you do not need to create the `dest` directory beforehand. It will be created if one does not exist.
 
 ### Options
 
@@ -64,7 +85,12 @@ grunt.initConfig({
             options: {
                 htmlLcov: true
             },
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
@@ -79,7 +105,12 @@ grunt.initConfig({
             options: {
                 lcovOnly: true
             },
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }
@@ -87,17 +118,22 @@ grunt.initConfig({
 ```
 In the above example, only the LCOV code coverage report will be generated into the `dest` directory.
 
-Also, it is recommended to clean your `dest` directory before generating the code coverage report. This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
+Also, it is recommended to clean your `dest` and the auto-generated `tmp` directory before generating the code coverage report. This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
 ```js
 grunt.initConfig({
     // clean the coverage folder before generating code coverage
     clean: {
-        output: ['coverage/*']
+        output: ['coverage/**', 'tmp/**']
     },
 
     appc_istanbul: {
         samples: {
-            src: './samples/*.js',
+            proj: '/Users/wilson_san/sandbox/monkeyAli',
+            src: [
+                '<%= appc_istanbul.samples.proj %>/app.js',
+                '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+            ],
             dest: 'coverage/'
         }
     }

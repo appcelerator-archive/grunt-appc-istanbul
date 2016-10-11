@@ -22,8 +22,8 @@ module.exports = function (grunt) {
             }
 
             // making a copy of file.proj into tmp directory; all instrumentation and code coverage will occur in the tmp directory
-            grunt.log.ok(`Copying ${file.proj} to ./tmp for target '${that.target}'.`);
             const tmpDir = `${process.cwd()}/tmp`;
+            grunt.log.ok(`Copying ${file.proj} to ./tmp for target '${that.target}'.`);
             grunt.file.copy(file.proj, tmpDir);
 
             const iw = new IstanbulWrapper();
@@ -32,14 +32,22 @@ module.exports = function (grunt) {
                 grunt.log.ok(`Instrumenting ${tmpSrc} for target '${that.target}'.`);
                 iw.instrument(tmpSrc, src);
             });
+
             grunt.log.ok(`Running Arrow project for target '${that.target}'.`);
-            iw.runArrow(function () {
+            iw.runArrow();
+
+            // ctrl+c to trigger the coverage report
+            process.on('SIGINT', function () {
                 grunt.log.ok(`Gathering code coverage data for target '${that.target}'.`);
                 iw.addCoverage();
+
                 grunt.log.ok(`Creating report for target '${that.target}'.`);
                 iw.makeReport(that.options(), file.dest);
+
                 grunt.log.ok(`Finished writing code coverage report for target '${that.target}'.`);
                 done();
+
+                process.exit();
             });
         });
     });
