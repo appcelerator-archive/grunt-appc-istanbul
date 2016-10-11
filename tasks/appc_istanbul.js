@@ -11,6 +11,9 @@ module.exports = function (grunt) {
             done = that.async();
 
         that.files.forEach(function (file) {
+            if (!file.proj) {
+                grunt.fail.fatal(`'proj' property not specified for target ${that.target}.`, 1);
+            }
             if (!file.main) {
                 grunt.fail.fatal(`'main' property not specified for target ${that.target}.`, 1);
             }
@@ -21,19 +24,26 @@ module.exports = function (grunt) {
                 grunt.fail.fatal(`'dest' property not specified for target ${that.target}.`, 1);
             }
 
+            // making a copy of file.proj into tmp directory; all instrumentation and code coverage will occur in the tmp directory
+            grunt.log.ok(`Copying ${file.proj} to ./tmp for target '${that.target}'.`);
+            const tmpDir = `${process.cwd()}/tmp`;
+            grunt.file.copy(file.proj, tmpDir);
+
             const iw = new IstanbulWrapper();
-            // instrument all the js files/code
             file.src.forEach(function (src) {
-                const tmpSrc = `${process.cwd()}/tmp/${src}`;
+                const tmpSrc = src.replace(file.proj, tmpDir);
                 if (src === file.main) {
+                    grunt.log.ok(`Setting ${tmpSrc} as entry point file for target '${that.target}'.`);
                     iw.setMain(tmpSrc);
                 }
-                // all the instrumentation and coverage data gathering will be done in the tmp folder
-                grunt.file.copy(src, tmpSrc);
+                grunt.log.ok(`Instrumenting ${tmpSrc} for target '${that.target}'.`);
                 iw.instrument(tmpSrc, src);
             });
+            grunt.log.ok(`Running entry point file for target '${that.target}'.`);
             iw.runEntryPoint(function () {
+                grunt.log.ok(`Gathering code coverage data for target '${that.target}'.`);
                 iw.addCoverage();
+                grunt.log.ok(`Creating report for target '${that.target}'.`);
                 iw.makeReport(that.options(), file.dest);
                 grunt.log.ok(`Finished writing code coverage report for target '${that.target}'.`);
                 done();

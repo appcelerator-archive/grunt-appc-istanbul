@@ -6,13 +6,18 @@ module.exports = function (grunt) {
     grunt.initConfig({
         // clean the coverage folder before generating code coverage
         clean: {
-            output: ['coverage/*', 'tmp/*']
+            output: ['coverage/**', 'tmp/**']
         },
 
         appc_istanbul: {
             samples: {
-                main: './samples/test.js',
-                src: './samples/*.js',
+                proj: '/Users/wilson_san/sandbox/monkeyAli',
+                main: '<%= appc_istanbul.samples.proj %>/app.js',
+                src: [
+                    '<%= appc_istanbul.samples.proj %>/app.js',
+                    '<%= appc_istanbul.samples.proj %>/apis/*.js',
+                    '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+                ],
                 dest: 'coverage/'
             }
         }
