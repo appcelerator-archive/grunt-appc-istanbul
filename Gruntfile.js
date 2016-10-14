@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
         appc_istanbul: {
             samples: {
-                proj: '/Users/wilson_san/sandbox/monkeyAli',
+                proj: '/Users/wilson_san/sandbox/monkeygorillaz',
                 src: [
                     '<%= appc_istanbul.samples.proj %>/app.js',
                     '<%= appc_istanbul.samples.proj %>/apis/*.js',

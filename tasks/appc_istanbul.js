@@ -33,6 +33,9 @@ module.exports = function (grunt) {
                 iw.instrument(tmpSrc, src);
             });
 
+            grunt.log.ok(`Injecting capture code into 'app.js' for target '${that.target}'.`);
+            iw.injectCapture();
+
             grunt.log.ok(`Running Arrow project for target '${that.target}'.`);
             iw.runArrow();
 
