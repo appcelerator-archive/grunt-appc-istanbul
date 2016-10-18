@@ -10,14 +10,20 @@ module.exports = function (grunt) {
             ]
         },
 
-        appc_istanbul: {
-            samples: {
+        AppcIstanbul_setupAndRun: {
+            sample: {
                 proj: '/Users/wilson_san/sandbox/monkeygorillaz',
                 src: [
-                    '<%= appc_istanbul.samples.proj %>/app.js',
-                    '<%= appc_istanbul.samples.proj %>/apis/*.js',
-                    '<%= appc_istanbul.samples.proj %>/blocks/*.js',
+                    '<%= AppcIstanbul_setupAndRun.sample.proj %>/app.js',
+                    '<%= AppcIstanbul_setupAndRun.sample.proj %>/apis/*.js',
+                    '<%= AppcIstanbul_setupAndRun.sample.proj %>/blocks/*.js',
                 ],
+                waitForLog: 'server started on port 8080'
+            }
+        },
+
+        AppcIstanbul_makeReport: {
+            sample: {
                 dest: 'coverage/'
             }
         }
@@ -28,5 +34,10 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('default', ['clean', 'appc_istanbul']);
+    grunt.registerTask('default', [
+        'clean',
+        'AppcIstanbul_setupAndRun',
+        /* do other stuff like running tests*/
+        'AppcIstanbul_makeReport'
+    ]);
 };
