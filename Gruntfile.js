@@ -1,12 +1,13 @@
 'use strict';
 
 module.exports = function (grunt) {
-
-    // Project configuration.
     grunt.initConfig({
-        // clean the coverage folder before generating code coverage
         clean: {
-            output: ['coverage/**', 'tmp/**']
+            output: [
+                'coverage/**',
+                'tmp/**',
+                'child.pid'
+            ]
         },
 
         appc_istanbul: {
