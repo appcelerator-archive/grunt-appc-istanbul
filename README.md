@@ -152,6 +152,9 @@ Also, it is recommended to clean the following:
 
 This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
 ```js
+grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-appc-istanbul');
+
 grunt.initConfig({
     clean: {
         output: [
@@ -178,9 +181,6 @@ grunt.initConfig({
         }
     }
 });
-
-grunt.loadNpmTasks('grunt-contrib-clean');
-grunt.loadNpmTasks('grunt-appc-istanbul');
 
 grunt.registerTask('default', [
     'clean',
