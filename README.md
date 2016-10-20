@@ -26,11 +26,10 @@ In your project's Gruntfile, add a section named `AppcIstanbul_setupAndRun` and 
 grunt.initConfig({
     AppcIstanbul_setupAndRun: {
         sample: {
-            proj: '/Users/wilson_san/sandbox/monkeygorillaz',
             src: [
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/app.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/apis/*.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/blocks/*.js',
+                'app.js',
+                'apis/*.js',
+                'blocks/*.js',
             ],
             waitForLog: 'server started on port 8080'
         }
@@ -60,10 +59,6 @@ In the above example, since the `options` property is not specified in the `samp
 > Copy, instrument, and run the Arrow project.
 
 ##### Target Properties (required)
-###### proj
-Type: `String`
-
-The value should be the path to your Arrow project.
 
 ###### src
 Type: `Array`
@@ -103,11 +98,10 @@ If this property is specified, then only a LCOV code coverage report is generate
 grunt.initConfig({
     AppcIstanbul_setupAndRun: {
         sample: {
-            proj: '/Users/wilson_san/sandbox/monkeygorillaz',
             src: [
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/app.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/apis/*.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/blocks/*.js',
+                'app.js',
+                'apis/*.js',
+                'blocks/*.js',
             ],
             waitForLog: 'server started on port 8080'
         }
@@ -129,11 +123,10 @@ In the above example, both the HTML and LCOV code coverage reports will be gener
 grunt.initConfig({
     AppcIstanbul_setupAndRun: {
         sample: {
-            proj: '/Users/wilson_san/sandbox/monkeygorillaz',
             src: [
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/app.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/apis/*.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/blocks/*.js',
+                'app.js',
+                'apis/*.js',
+                'blocks/*.js',
             ],
             waitForLog: 'server started on port 8080'
         }
@@ -170,11 +163,10 @@ grunt.initConfig({
 
     AppcIstanbul_setupAndRun: {
         sample: {
-            proj: '/Users/wilson_san/sandbox/monkeygorillaz',
             src: [
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/app.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/apis/*.js',
-                '<%= AppcIstanbul_setupAndRun.sample.proj %>/blocks/*.js',
+                'app.js',
+                'apis/*.js',
+                'blocks/*.js',
             ],
             waitForLog: 'server started on port 8080'
         }
@@ -187,10 +179,8 @@ grunt.initConfig({
     }
 });
 
-// Actually load this plugin's task(s).
-grunt.loadTasks('tasks');
-
 grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-appc-istanbul');
 
 grunt.registerTask('default', [
     'clean',

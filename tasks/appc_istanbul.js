@@ -11,7 +11,8 @@ const
 
 const
     PREFIX = 'AppcIstanbul_',
-    TMP_DIR = `${process.cwd()}/tmp`;
+    TMP_DIR = path.join(process.cwd(), 'tmp'),
+    TMP_DIR_EXP = new RegExp(`^${TMP_DIR}`);
 
 module.exports = function (grunt) {
     grunt.registerMultiTask(`${PREFIX}setupAndRun`, 'Copy, instrument, and run the Arrow project.', function () {
@@ -21,9 +22,6 @@ module.exports = function (grunt) {
 
         grunt.log.ok(`Running target '${that.target}'.`);
 
-        if (!that.data.proj) {
-            grunt.fail.fatal(`'proj' property not specified.`, 1);
-        }
         if (!that.data.src) {
             grunt.fail.fatal(`'src' property not specified.`, 1);
         }
@@ -32,15 +30,35 @@ module.exports = function (grunt) {
         }
 
         that.files.forEach(function (file) {
-            // making a copy of file.proj into tmp directory; all instrumentation and code coverage will occur in the tmp directory
-            grunt.log.ok(`Copying ${file.proj} to ./tmp.`);
-            grunt.file.copy(file.proj, TMP_DIR);
+            // making a copy of process.cwd into tmp directory; all instrumentation and code coverage will occur in the tmp directory
+            grunt.log.ok(`Copying ${process.cwd()} to ./tmp.`);
+            // grunt.file.copy is not smart, need to systematically identify all the files and directories in the arrow project
+            grunt.file.expand(`${process.cwd()}/**`)
+            .forEach(function (somePath) {
+                // but, ignore process.cwd path (arrow project itself) and the tmp directory path
+                // grunt.file.copy will recursively copy the tmp directory into itself e.g. <process.cwd()>/tmp/tmp/tmp ...
+                if (somePath !== process.cwd() && !TMP_DIR_EXP.test(somePath)) {
+                    const
+                        suffix = somePath.slice(process.cwd().length + 1), // grab everything after process.cwd path
+                        newPathInTmp = path.join(TMP_DIR, suffix);
+
+                    if (grunt.file.isDir(somePath)) {
+                        grunt.file.mkdir(newPathInTmp);
+                    }
+                    else if (grunt.file.isFile(somePath)) {
+                        // grunt doc is misleading; need to specify both the src and dest FILE path
+                        grunt.file.copy(somePath, newPathInTmp);
+                    }
+                }
+            });
 
             // instrument target files specified by the user
-            file.src.forEach(function (src) {
-                const tmpSrc = src.replace(file.proj, TMP_DIR);
+            file.src.forEach(function (srcSuffix) {
+                const
+                    tmpSrc = path.join(TMP_DIR, srcSuffix),
+                    realSrc = path.join(process.cwd(), srcSuffix);
                 grunt.log.ok(`Instrumenting ${tmpSrc}.`);
-                iw.instrument(tmpSrc, src);
+                iw.instrument(tmpSrc, realSrc);
             });
 
             grunt.log.ok(`Injecting capture code into 'app.js'.`);
