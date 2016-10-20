@@ -1,6 +1,6 @@
 # grunt-appc-istanbul
 
-> A lightweight plugin to generate code coverage (leveraging istanbul) for Arrow projects.
+A lightweight plugin to generate code coverage (leveraging istanbul) for Arrow projects. **This plugin is meant to be used outside of an Arrow project**.
 
 ## Getting Started
 This plugin requires Grunt `~1.0.0` and **assumes you already have Appc CLI installed on your machine**.
