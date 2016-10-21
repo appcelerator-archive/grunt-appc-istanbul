@@ -1,3 +1,5 @@
+# Do not use this branch. Only keeping it as reminder to not use child_process.fork with Arrow projects. You will need to manually install all dependencies (including any connectors) first before you can use child_process.fork on an Arrow project.
+
 # grunt-appc-istanbul
 
 > A lightweight plugin to generate code coverage while leveraging istanbul.
