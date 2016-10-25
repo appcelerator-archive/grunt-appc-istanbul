@@ -12,7 +12,8 @@ const
 const
     PREFIX = 'AppcIstanbul_',
     TMP_DIR = path.join(process.cwd(), 'tmp'),
-    TMP_DIR_EXP = new RegExp(`^${TMP_DIR}`);
+    TMP_DIR_EXP = new RegExp(`^${TMP_DIR}`),
+    NODE_MODULES_EXP = new RegExp(`^${path.join(process.cwd(), 'node_modules')}`);
 
 module.exports = function (grunt) {
     grunt.registerMultiTask(`${PREFIX}setupAndRun`, 'Copy, instrument, and run the Arrow project.', function () {
@@ -35,9 +36,14 @@ module.exports = function (grunt) {
             // grunt.file.copy is not smart, need to systematically identify all the files and directories in the arrow project
             grunt.file.expand(`${process.cwd()}/**`)
             .forEach(function (somePath) {
-                // but, ignore process.cwd path (arrow project itself) and the tmp directory path
+                // preliminary checks before copying files to TMP_DIR
                 // grunt.file.copy will recursively copy the tmp directory into itself e.g. <process.cwd()>/tmp/tmp/tmp ...
-                if (somePath !== process.cwd() && !TMP_DIR_EXP.test(somePath)) {
+                const pathIsGood =
+                    somePath !== process.cwd() && // shouldn't match the arrow project itself
+                    !TMP_DIR_EXP.test(somePath) && // shouldn't match the tmp directory
+                    !NODE_MODULES_EXP.test(somePath) // shouldn't match the node_modules directory
+
+                if (pathIsGood) {
                     const
                         suffix = somePath.slice(process.cwd().length + 1), // grab everything after process.cwd path
                         newPathInTmp = path.join(TMP_DIR, suffix);
