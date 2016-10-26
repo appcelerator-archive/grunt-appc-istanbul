@@ -98,6 +98,12 @@ Default value: `false`
 
 If this property is specified, then only a LCOV code coverage report is generated in the target's `dest` directory.
 
+###### options.cobertura
+Type: `Boolean`
+Default value: `false`
+
+If this property is specified, then only a Cobertura code coverage report is generated in the target's `dest` directory.
+
 ### Usage Examples
 ```js
 grunt.initConfig({
@@ -149,26 +155,8 @@ grunt.initConfig({
 ```
 In the above example, only the LCOV code coverage report will be generated into the `dest` directory.
 
-Also, it is recommended to clean the following:
-
-* `dest` directory
-* Auto-generated `tmp` directory
-* `child.pid` file
-
-This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
 ```js
-grunt.loadNpmTasks('grunt-contrib-clean');
-grunt.loadNpmTasks('grunt-appc-istanbul');
-
 grunt.initConfig({
-    clean: {
-        output: [
-            'coverage/**',
-            'tmp/**',
-            'child.pid'
-        ]
-    },
-
     AppcIstanbul_setupAndRun: {
         sample: {
             src: [
@@ -179,18 +167,63 @@ grunt.initConfig({
             waitForLog: 'server started on port 8080'
         }
     },
-
+    ...
     AppcIstanbul_makeReport: {
         sample: {
+            options: {
+                cobertura: true
+            },
             dest: 'coverage/'
         }
     }
 });
+```
+In the above example, only the Cobertura code coverage report will be generated into the `dest` directory.
 
-grunt.registerTask('default', [
-    'clean',
-    'AppcIstanbul_setupAndRun',
-    /* do other stuff like running tests*/
-    'AppcIstanbul_makeReport'
-]);
+Also, it is recommended to clean the following:
+
+* `dest` directory
+* Auto-generated `tmp` directory
+* `child.pid` file
+
+This allows for an accurate code coverage report. For example, in your `Gruntfile.js`:
+```js
+module.exports = function (grunt) {
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-appc-istanbul');
+
+    grunt.initConfig({
+        clean: {
+            output: [
+                'coverage/**',
+                'tmp/**',
+                'child.pid'
+            ]
+        },
+
+        AppcIstanbul_setupAndRun: {
+            sample: {
+                src: [
+                    'app.js',
+                    'apis/*.js',
+                    'blocks/*.js',
+                ],
+                waitForLog: 'server started on port 8080'
+            }
+        },
+
+        AppcIstanbul_makeReport: {
+            sample: {
+                dest: 'coverage/'
+            }
+        }
+    });
+
+    grunt.registerTask('default', [
+        'clean',
+        'AppcIstanbul_setupAndRun',
+        /* do other stuff like running tests*/
+        'AppcIstanbul_makeReport'
+    ]);
+}
 ```
