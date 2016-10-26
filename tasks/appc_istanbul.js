@@ -1,5 +1,3 @@
-// TODO: incorporate grunt-appc-js
-
 'use strict';
 
 const
