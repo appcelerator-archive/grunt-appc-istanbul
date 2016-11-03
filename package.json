@@ -28,7 +28,7 @@
     "tasks"
   ],
   "scripts": {
-    "test": "mocha tests/*.js"  
+    "test": "mocha test/*.js"  
   },
   "dependencies": {
     "istanbul": "~0.4.5",
