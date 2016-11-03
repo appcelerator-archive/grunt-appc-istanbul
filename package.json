@@ -28,7 +28,7 @@
     "tasks"
   ],
   "scripts": {
-    "test": "mocha test/*.js"  
+    "test": "mocha test/*_tests.js"
   },
   "dependencies": {
     "istanbul": "~0.4.5",
@@ -37,7 +37,8 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "rimraf": "^2.5.4"
   },
   "keywords": [
     "appcelerator",
