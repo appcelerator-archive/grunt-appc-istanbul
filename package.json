@@ -1,42 +1,48 @@
 {
-    "name": "grunt-appc-istanbul",
-    "description": "A lightweight plugin to generate code coverage while leveraging istanbul.",
-    "version": "0.1.0",
-    "homepage": "https://github.com/appcelerator/grunt-appc-istanbul",
-    "author": {
-        "name": "Wilson Luu",
-        "email": "wluu@axway.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/appcelerator/grunt-appc-istanbul.git"
-    },
-    "bugs": {
-        "url": "https://github.com/appcelerator/grunt-appc-istanbul/issues"
-    },
-    "licenses": [{
-        "type": "MIT",
-        "url": "https://github.com/appcelerator/grunt-appc-istanbul/blob/master/LICENSE-MIT"
-    }],
-    "engines": {
-        "node": ">= 4.0.0"
-    },
-    "files": [
-        "lib",
-        "tasks"
-    ],
-    "dependencies": {
-        "istanbul": "~0.4.5",
-        "tree-kill": "^1.1.0"
-    },
-    "devDependencies": {
-        "grunt": "^1.0.1",
-        "grunt-contrib-clean": "^1.0.0"
-    },
-    "keywords": [
-        "appcelerator",
-        "coverage",
-        "grunt",
-        "istanbul"
-    ]
+  "name": "grunt-appc-istanbul",
+  "description": "A lightweight plugin to generate code coverage while leveraging istanbul.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/appcelerator/grunt-appc-istanbul",
+  "author": {
+    "name": "Wilson Luu",
+    "email": "wluu@axway.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appcelerator/grunt-appc-istanbul.git"
+  },
+  "bugs": {
+    "url": "https://github.com/appcelerator/grunt-appc-istanbul/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/appcelerator/grunt-appc-istanbul/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "files": [
+    "lib",
+    "tasks"
+  ],
+  "scripts": {
+    "test": "mocha tests/*.js"  
+  },
+  "dependencies": {
+    "istanbul": "~0.4.5",
+    "tree-kill": "^1.1.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "mocha": "^3.1.2"
+  },
+  "keywords": [
+    "appcelerator",
+    "coverage",
+    "grunt",
+    "istanbul"
+  ]
 }
