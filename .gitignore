@@ -3,3 +3,4 @@ npm-debug.log
 tmp
 child.pid
 .DS_Store
+coverage
