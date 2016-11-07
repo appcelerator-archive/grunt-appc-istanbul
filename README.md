@@ -2,11 +2,6 @@
 
 > A lightweight plugin to generate code coverage (leveraging istanbul) for Arrow projects.
 
-## TODO:
-
-* Need unit tests for `istanbul_wrapper.js` and `appc_istanbul.js`.
-* Incorporate `grunt-appc-js`.
-
 ## Getting Started
 This plugin requires Grunt `~1.0.0` and **assumes you already have Appc CLI installed on your machine**.
 
