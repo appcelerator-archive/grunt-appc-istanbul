@@ -1,7 +1,7 @@
 {
   "name": "grunt-appc-istanbul",
   "description": "A lightweight plugin to generate code coverage while leveraging istanbul.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/appcelerator/grunt-appc-istanbul",
   "author": {
     "name": "Wilson Luu",

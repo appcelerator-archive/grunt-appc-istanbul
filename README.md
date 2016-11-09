@@ -17,9 +17,7 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-appc-istanbul');
 ```
 
-## The "appc_istanbul" task
-
-### Overview
+## Overview
 In your project's Gruntfile, add a section named `AppcIstanbul_setupAndRun` and `AppcIstanbul_makeReport` to the data object passed into `grunt.initConfig()`.
 
 ```js
